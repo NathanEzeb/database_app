@@ -1,5 +1,6 @@
 package controller;
 
+import dao.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -63,7 +63,7 @@ public class addCustomerController implements Initializable {
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/report.fxml"));
+        scene = FXMLLoader.load(getClass().getResource("/src/view/report.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -148,7 +148,7 @@ public class addCustomerController implements Initializable {
      */
     private int getCountryId(String countryName) throws SQLException {
         String sql = "SELECT Country_ID FROM COUNTRIES WHERE Country = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, countryName);
         ResultSet rs = ps.executeQuery();
 
@@ -170,7 +170,7 @@ public class addCustomerController implements Initializable {
      */
     private int getDivisionId(String divisionName) throws SQLException {
         String sql = "SELECT Division_ID FROM FIRST_LEVEL_DIVISIONS WHERE Division = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, divisionName);
         ResultSet rs = ps.executeQuery();
 
@@ -205,7 +205,7 @@ public class addCustomerController implements Initializable {
             String phoneNumber = phoneTxt.getText().replaceAll("\\D+", "");
 
             String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, nameTxt.getText());
             ps.setString(2, addressTxt.getText());
             ps.setInt(3, Integer.parseInt(PostalTxt.getText()));

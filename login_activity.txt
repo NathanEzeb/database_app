@@ -39,3 +39,7 @@ User: test, Login Attempt: Successful, Timestamp: 2024-04-11T23:45:39.604935500
 User: test, Login Attempt: Successful, Timestamp: 2024-04-13T00:27:16.323922200
 User: admin, Login Attempt: Successful, Timestamp: 2024-04-13T00:28:33.168974200
 User: test, Login Attempt: Successful, Timestamp: 2024-04-13T00:29:28.797914600
+User: test, Login Attempt: Successful, Timestamp: 2024-04-14T20:07:08.742676200
+User: admin, Login Attempt: Failed, Timestamp: 2024-04-18T15:26:10.512785500
+User: test, Login Attempt: Successful, Timestamp: 2024-04-18T15:26:56.478663400
+User: test, Login Attempt: Successful, Timestamp: 2024-04-18T15:30:26.606067200

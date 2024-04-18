@@ -2,7 +2,6 @@ package dao;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.appointment;
 import model.customer;
 import model.inStateCustomer;
 import model.outStateCustomer;

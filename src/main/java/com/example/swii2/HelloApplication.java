@@ -1,8 +1,6 @@
 package com.example.swii2;
 
 import dao.JDBC;
-import dao.Query;
-import dao.userQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,10 +10,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Locale;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
 
 /**
  * The HelloApplication class is the main entry point of the application.
@@ -26,6 +20,8 @@ import java.time.LocalDateTime;
  * It translates the text on the login page to the appropriate language (English or French) based on the locale.
  */
 public class HelloApplication extends Application {
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/view/loginPage.fxml"));
@@ -34,6 +30,8 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();

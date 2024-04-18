@@ -1,5 +1,6 @@
 package controller;
 
+import dao.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +16,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
@@ -154,7 +153,7 @@ public class loginPageController implements Initializable {
         try {
             // Execute a SQL SELECT query to retrieve the User_ID, User_Name, and Password
             String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {

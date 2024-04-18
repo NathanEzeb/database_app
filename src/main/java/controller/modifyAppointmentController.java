@@ -1,5 +1,6 @@
 package controller;
 
+import dao.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -156,7 +157,7 @@ public class modifyAppointmentController implements Initializable {
     void onActionCancel(ActionEvent event) throws IOException, SQLException {
         int userId = selectedAppointment.getUserId();
         String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {}
@@ -201,7 +202,7 @@ public class modifyAppointmentController implements Initializable {
      */
     public boolean isAppointmentOverlap(LocalDateTime startDateTime, LocalDateTime endDateTime) throws SQLException {
         String sql = "SELECT * FROM appointments WHERE (Start BETWEEN ? AND ?) OR (End BETWEEN ? AND ?) OR (Start <= ? AND End >= ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, Timestamp.valueOf(startDateTime));
         ps.setTimestamp(2, Timestamp.valueOf(endDateTime));
         ps.setTimestamp(3, Timestamp.valueOf(startDateTime));
@@ -223,7 +224,7 @@ public class modifyAppointmentController implements Initializable {
      */
     public int getContactId(String contactName) throws SQLException {
         String sql = "SELECT Contact_ID FROM contacts WHERE Contact_Name = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, contactName);
         ResultSet rs = ps.executeQuery();
 
@@ -284,7 +285,7 @@ public class modifyAppointmentController implements Initializable {
             int contactId = getContactId(selectedContactName);
 
             String sql = "INSERT INTO APPOINTMENTS (Title, Description, Contact_ID, Customer_ID, User_ID, Location, Type, Start, End) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1, titleTxt.getText());
             ps.setString(2, descriptionTxt.getText());
             ps.setInt(3, contactId); // Set the Contact_ID value to the contactId

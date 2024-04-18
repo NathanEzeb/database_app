@@ -1,5 +1,6 @@
 package controller;
 
+import dao.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.appointment;
 import model.customer;
 
 import java.io.IOException;
@@ -19,8 +18,6 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static dao.JDBC.connection;
@@ -66,7 +63,7 @@ public class modifyCustomerController implements Initializable {
 
     private int getCountry(int countryId) throws SQLException {
         String sql = "SELECT Country FROM COUNTRIES WHERE Country_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, countryId);
         ResultSet rs = ps.executeQuery();
 
@@ -79,7 +76,7 @@ public class modifyCustomerController implements Initializable {
 
     private String getDivisionName(int divisionId) throws SQLException {
         String sql = "SELECT Division FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, divisionId);
         ResultSet rs = ps.executeQuery();
 
@@ -101,7 +98,7 @@ public class modifyCustomerController implements Initializable {
      */
     private String getDivisionNameFromId(int divisionId) throws SQLException {
             String sql = "SELECT Division FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, divisionId);
         ResultSet rs = ps.executeQuery();
 
@@ -122,7 +119,7 @@ public class modifyCustomerController implements Initializable {
      */
     private int getCountryIdFromDivisionId(int divisionId) throws SQLException {
         String sql = "SELECT Country_ID FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, divisionId);
         ResultSet rs = ps.executeQuery();
 
@@ -157,7 +154,7 @@ public class modifyCustomerController implements Initializable {
      */
     private String getCountryFromCountryId(int countryId) throws SQLException {
         String sql = "SELECT Country FROM COUNTRIES WHERE Country_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, countryId);
         ResultSet rs = ps.executeQuery();
 
@@ -257,7 +254,7 @@ public class modifyCustomerController implements Initializable {
      */
     private int getCountryId(String countryName) throws SQLException {
         String sql = "SELECT Country_ID FROM COUNTRIES WHERE Country = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, countryName);
         ResultSet rs = ps.executeQuery();
 
@@ -270,7 +267,7 @@ public class modifyCustomerController implements Initializable {
 
     private String getDivision(int divisionId) throws SQLException {
         String sql = "SELECT Division FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, divisionId);
         ResultSet rs = ps.executeQuery();
 
@@ -314,7 +311,7 @@ public class modifyCustomerController implements Initializable {
         int divisionId = getDivisionId(selectedDivision);
 
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, nameTxt.getText());
         ps.setString(2, addressTxt.getText());
         ps.setString(3, PostalTxt.getText());
@@ -336,7 +333,7 @@ public class modifyCustomerController implements Initializable {
      */
     private int getDivisionId(String divisionName) throws SQLException {
         String sql = "SELECT Division_ID FROM FIRST_LEVEL_DIVISIONS WHERE Division = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, divisionName);
         ResultSet rs = ps.executeQuery();
 
@@ -360,7 +357,7 @@ public class modifyCustomerController implements Initializable {
         String phoneNumber = phoneTxt.getText().replaceAll("\\D+", "");
 
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?)";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, nameTxt.getText());
         ps.setString(2, addressTxt.getText());
         ps.setInt(3, Integer.parseInt(PostalTxt.getText()));

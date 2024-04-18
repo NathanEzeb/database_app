@@ -1,8 +1,8 @@
 package controller;
 
+import dao.JDBC;
 import dao.appointmentQuery;
 import dao.customerQuery;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -186,7 +186,7 @@ public class reportController {
     @FXML
     void onActionCancel(ActionEvent event) throws IOException, SQLException {
         String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {}
@@ -254,7 +254,7 @@ public class reportController {
     @FXML
     void onActionLogout(ActionEvent event) throws IOException {
         stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/LoginPage.fxml"));
+        scene = FXMLLoader.load(getClass().getResource("/view/loginPage.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -335,7 +335,7 @@ public class reportController {
             try {
                 // Prepare the SQL SELECT statement
                 String sql = "SELECT * FROM CUSTOMERS WHERE Customer_Name LIKE ?";
-                PreparedStatement ps = connection.prepareStatement(sql);
+                PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
                 // Set the placeholder to the entered customer name
                 ps.setString(1, "%" + customerName + "%");
@@ -386,7 +386,7 @@ public class reportController {
 
         // Check if the customer has any appointments
         String checkSql = "SELECT * FROM APPOINTMENTS WHERE Customer_ID = ?";
-        PreparedStatement checkPs = connection.prepareStatement(checkSql);
+        PreparedStatement checkPs = JDBC.connection.prepareStatement(checkSql);
         checkPs.setInt(1, selectedCustomer.getCustomerId());
         ResultSet checkRs = checkPs.executeQuery();
         if (checkRs.next()) {
@@ -404,7 +404,7 @@ public class reportController {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
 
         // Create the PreparedStatement
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
         // Set the placeholder to the ID of the selected customer
         ps.setInt(1, selectedCustomer.getCustomerId());

@@ -1,8 +1,7 @@
 package controller;
 
-import dao.Query;
+import dao.JDBC;
 import dao.appointmentQuery;
-import dao.userDaoImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -164,7 +163,7 @@ public class mainMenuController implements Initializable {
     public static ObservableList<appointment> returnSelectFill() throws SQLException {
         allAppointments.clear();
         String sql = "SELECT * FROM APPOINTMENTS WHERE User_ID = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, userId); // Use the userId field to filter the appointments
         ResultSet rs = ps.executeQuery();
         System.out.println("User ID: " + userId);
@@ -281,7 +280,7 @@ public class mainMenuController implements Initializable {
         String sql = "SELECT * FROM APPOINTMENTS WHERE User_ID = ? AND Start BETWEEN ? AND ?";
 
         // Create the PreparedStatement
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
         // Set the placeholders
         ps.setInt(1, userId);
@@ -466,7 +465,7 @@ public class mainMenuController implements Initializable {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
 
         // Create the PreparedStatement
-        PreparedStatement ps = connection.prepareStatement(sql);
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
 
         // Set the placeholder to the ID of the selected appointment
         ps.setInt(1, selectedAppointment.getAppointmentId());
